@@ -1,0 +1,5 @@
+model_type: nonmem
+tags:
+- 1-cmt linear model with 1st-order absorption
+notes:
+- residual error model can be improved

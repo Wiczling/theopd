@@ -1,0 +1,52 @@
+---
+title: "Theopd data analysis"
+author: "Pawel Wiczling"
+date: today
+format:
+  revealjs:
+    slide-number: true
+    footer: "PW"
+
+editor: source
+---
+
+## Introduction
+
+Simple demo demonstrating the use of NONMEM to fit theoph data using bbr package.
+
+## Raw Data
+
+![](figures/rawdata.png)
+
+## AUC, Cmin, Cmax
+
+![](tables/auccmaxcmin.png)
+
+## Model {.scrollable .smaller}
+
+The data was analyzed using a 1 comp. disposition model + first order absorption:
+
+$$
+\frac{dA}{dt} =  - k_a \cdot A \\
+V \cdot \frac{dC}{dt} = k_a \cdot A - CL \cdot  C
+$$
+Residual variability:
+
+$$
+\log C_{Obs_{i,j}} \sim N(f(P_{i},t_{i,j}), \sigma)
+$$
+where $P_i=(CL_{i}, ka_{i}, V_{i}, V2_{i})$ is a vector of subject-specific parameters, $f(.)$ corresponds to the above ODE equations.
+
+Between subject variability: 
+
+$$
+P_{i} \sim N(\theta_P, \omega_P)
+$$
+
+## Conclusions
+
+-   it works
+-   it works
+
+<!-- renderthis::to_pdf("deliv/presentations/presentation001.html") -->
+<!-- https://stackoverflow.com/questions/73463045/can-i-render-a-html-and-a-pdf-presentation-in-the-same-qmd -->
