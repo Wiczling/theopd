@@ -139,8 +139,17 @@ log_df%>%
 ## Models summary
 
 ```{r}
-sum1 <- mod1 %>% model_summary()
-sum2 <- mod2 %>% model_summary()
+cat("Model 1")
+mod1 %>% 
+  model_summary() %>%
+  param_estimates()%>% 
+  kableExtra::kable()
+
+cat("Model 2")
+mod2 %>% 
+  model_summary() %>%
+  param_estimates()%>% 
+  kableExtra::kable()
 ```
 
 ```{r}
@@ -497,7 +506,8 @@ pmtab$data %>%
    kableExtra::kable_styling("striped") %>%
   kableExtra::save_kable(paste0(here::here("deliv/tables"),"/auccmaxcmin", ".png"),zoom = 1.5)
 
-pmtab$data %>% kableExtra::kable()
+pmtab$data %>% 
+  kableExtra::kable()
 
 ```
 
