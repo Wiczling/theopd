@@ -2,7 +2,7 @@ $PROBLEM 1-CMT Linear Model with 1st-Order Absorption
 
 $INPUT ID BW DOSE TIME DV AMT MDV CMT NUM
 
-$DATA ../nonmemdata.csv
+$DATA ../../../../data/derived/nonmemdata.csv
       IGNORE="
 
 $SUBROUTINE ADVAN2 TRANS2

@@ -2,7 +2,7 @@ $PROBLEM From bbr: see 2.yaml for details
 
 $INPUT ID BW DOSE TIME DV AMT MDV CMT NUM
 
-$DATA ../nonmemdata.csv
+$DATA ../../../../data/derived/nonmemdata.csv
       IGNORE="
 
 $SUBROUTINE ADVAN2 TRANS2

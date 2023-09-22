@@ -5,13 +5,13 @@ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://namespaces.oreilly.com/xmlnut/address output.xsd"
 xmlns:nm="http://namespaces.oreilly.com/xmlnut/address"
 >
-<nm:start_datetime>2023-09-21T20:48:39.275</nm:start_datetime>
+<nm:start_datetime>2023-09-22T09:04:29.150</nm:start_datetime>
 <nm:control_stream><![CDATA[
 $PROBLEM 1-CMT Linear Model with 1st-Order Absorption
 
 $INPUT ID BW DOSE TIME DV AMT MDV CMT NUM
 
-$DATA ../nonmemdata.csv
+$DATA ../../../../data/derived/nonmemdata.csv
       IGNORE="
 
 $SUBROUTINE ADVAN2 TRANS2
@@ -66,8 +66,8 @@ FILE=patab1.tab
 <nm:license_information><![CDATA[
 License Registered to: Medical University of Gdansk
 Expiration Date:    14 JUL 2024
-Current Date:       21 SEP 2023
-Days until program expires : 298
+Current Date:       22 SEP 2023
+Days until program expires : 297
 ]]></nm:license_information>
 <nm:program_information><![CDATA[
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.4.4
@@ -385,11 +385,11 @@ Days until program expires : 298
 <nm:col nm:cname='EPS1'>22.481722844925113</nm:col>
 </nm:row>
 </nm:epsshrinkvr>
-<nm:estimation_elapsed_time>0.53</nm:estimation_elapsed_time>
+<nm:estimation_elapsed_time>0.64</nm:estimation_elapsed_time>
 <nm:covariance_information><![CDATA[
 ]]></nm:covariance_information>
 <nm:covariance_status nm:error='0' nm:numnegeigenvalues='-1' nm:mineigenvalue='0.0000000000000000' nm:maxeigenvalue='0.0000000000000000' nm:rms='0.0000000000000000'/>
-<nm:covariance_elapsed_time>0.10</nm:covariance_elapsed_time>
+<nm:covariance_elapsed_time>0.11</nm:covariance_elapsed_time>
 <nm:final_objective_function_text>MINIMUM VALUE OF OBJECTIVE FUNCTION</nm:final_objective_function_text>
 <nm:final_objective_function>116.80342577211775</nm:final_objective_function>
 <nm:theta>
@@ -725,6 +725,6 @@ Days until program expires : 298
 </nm:post_process_times>
 </nm:problem>
 </nm:nonmem>
-<nm:stop_datetime>2023-09-21T20:48:40.046</nm:stop_datetime>
-<nm:total_cputime>0.047</nm:total_cputime>
+<nm:stop_datetime>2023-09-22T09:04:30.011</nm:stop_datetime>
+<nm:total_cputime>0.063</nm:total_cputime>
 </nm:output>

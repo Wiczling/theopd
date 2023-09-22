@@ -15,6 +15,7 @@ format:
 Simple demo demonstrating the use of NONMEM to fit theoph data using bbr package
 
 ```{r, message=FALSE}
+
 library(pracma)
 library(bbr)
 library(dplyr)
@@ -26,17 +27,22 @@ library(pmplots)
 
 library(data.table)
 library(tidyverse)
-# library(mrgmisc)
 library(glue)
 library(whisker)
 library(here)
 
 library(pmtables)
+
+# library(mrgmisc)
+source("functions/resampling_functions.R") # from mrgmisc
+
 ```
 
 Some settings:
 
 ```{r}
+
+data_dir <- "../data/derived" 
 model_dir <- "../model/nonmem/basic"  
 bbi_init(.dir = model_dir,            # the directory to create the bbi.yaml in
          .nonmem_dir = "C:/",         # location of NONMEM installation
@@ -45,7 +51,7 @@ bbi_init(.dir = model_dir,            # the directory to create the bbi.yaml in
 
 # Data
 
-Theoph data is available in R. Several columns needs to be added (AMT, CMT, MDV) for NONMEM run.
+Theoph data is available in R. Several columns needs to be added (AMT, CMT, MDV) for NONMEM
 
 ```{r}
 data <- Theoph
@@ -73,7 +79,7 @@ dataall$NUM <- 1:length(dataall$Subject)
 #' mg/kg -> mg
 dataall$AMT<-dataall$AMT*dataall$Wt
 
-write.csv(dataall, paste0(model_dir, "/nonmemdata.csv"), row.names=FALSE)
+write.csv(dataall, paste0(data_dir, "/nonmemdata.csv"), row.names=FALSE)
 ```
 
 Plot raw data:
@@ -124,23 +130,24 @@ Compare models:
 
 ```{r}
 log_df <- run_log(model_dir)
-log_df
+log_df%>%
+  select(-c(absolute_model_path,yaml_md5))%>%
+  kableExtra::kable()
+  
 ```
 
 ## Models summary
 
 ```{r}
-
 sum1 <- mod1 %>% model_summary()
 sum2 <- mod2 %>% model_summary()
-sum1
-sum2
 ```
 
 ```{r}
 label_df <- mod2 %>% 
   param_labels()
-label_df
+label_df %>% 
+  kableExtra::kable()
 ```
 
 ```{r}
@@ -396,8 +403,8 @@ make_boot_run <- function(n, data, template, boot_dir, strat_cols = NULL,
   if(file.exists(paste0(mod_path, ".yaml")) && !overwrite) {
     return(read_model(mod_path))
   }
-
-  data_new <- resample_df(
+  
+   data_new <- resample_df(
     data,
     key_cols = "ID",
     strat_cols = strat_cols)
@@ -442,13 +449,14 @@ out <- submit_models(
 
 Summary of parameter estimates:
 
-```{r eval=FALSE}
+```{r}
 
 boot <- param_estimates_batch(BS_DIR)
 err <- filter(boot, !is.na(error_msg))
 nrow(err)
 
-param_estimates_compare(boot, mod2)
+param_estimates_compare(boot, mod2)%>% 
+  kableExtra::kable()
 ```
 
 # AUC, Cmax, Cmin
@@ -485,8 +493,9 @@ pmtab <- pt_cont_long(
 )
 
 pmtab$data %>%
-  kableExtra::kable() %>%
-  kableExtra::save_kable(paste0(here::here("deliv/tables"),"/auccmaxcmin", ".png"))
+  kableExtra::kable("html") %>%
+   kableExtra::kable_styling("striped") %>%
+  kableExtra::save_kable(paste0(here::here("deliv/tables"),"/auccmaxcmin", ".png"),zoom = 1.5)
 
 pmtab$data %>% kableExtra::kable()
 

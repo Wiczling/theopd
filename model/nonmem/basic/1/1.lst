@@ -1,10 +1,10 @@
-21.09.2023 
-20:48
+22.09.2023 
+09:04
 $PROBLEM 1-CMT Linear Model with 1st-Order Absorption
 
 $INPUT ID BW DOSE TIME DV AMT MDV CMT NUM
 
-$DATA ../nonmemdata.csv
+$DATA ../../../../data/derived/nonmemdata.csv
       IGNORE="
 
 $SUBROUTINE ADVAN2 TRANS2
@@ -57,8 +57,8 @@ NM-TRAN MESSAGES
   
 License Registered to: Medical University of Gdansk
 Expiration Date:    14 JUL 2024
-Current Date:       21 SEP 2023
-Days until program expires : 298
+Current Date:       22 SEP 2023
+Days until program expires : 297
 1NONLINEAR MIXED EFFECTS MODEL PROGRAM (NONMEM) VERSION 7.4.4
  ORIGINALLY DEVELOPED BY STUART BEAL, LEWIS SHEINER, AND ALISON BOECKMANN
  CURRENT DEVELOPERS ARE ROBERT BAUER, ICON DEVELOPMENT SOLUTIONS,
@@ -381,8 +381,8 @@ Days until program expires : 298
  TOTAL EFFECTIVE ETAS (NIND*NETA):                            36
   
  #TERE:
- Elapsed estimation  time in seconds:     0.53
- Elapsed covariance  time in seconds:     0.10
+ Elapsed estimation  time in seconds:     0.64
+ Elapsed covariance  time in seconds:     0.11
  Elapsed postprocess time in seconds:     0.04
 1
  
@@ -715,7 +715,7 @@ Days until program expires : 298
          7.65E-01  8.60E-01  9.28E-01  9.50E-01  1.04E+00  1.13E+00  1.33E+00
  
  Elapsed finaloutput time in seconds:     0.03
- #CPUT: Total CPU Time in Seconds,        0.047
+ #CPUT: Total CPU Time in Seconds,        0.063
 Stop Time: 
-21.09.2023 
-20:48
+22.09.2023 
+09:04
