@@ -117,9 +117,9 @@ Second model has an combined residual error model:
 
 ```{r}
 #mod2 <- new_model(file.path(model_dir, 2),  .overwrite = TRUE)
+#mod2 <- mod2 %>% add_tags("+proportional error model")
+#mod2 <- mod2 %>% add_notes("final")
 mod2 <- read_model(file.path(model_dir, 2))
-mod2 <- mod2 %>% add_tags("+proportional error model")
-mod2 <- mod2 %>% add_notes("final")
 ```
 
 ```{r, eval = FALSE}
@@ -140,23 +140,44 @@ log_df%>%
 
 ```{r}
 cat("Model 1")
-mod1 %>% 
-  model_summary() %>%
-  param_estimates()%>% 
-  kableExtra::kable()
+
+label_df <- mod1 %>% 
+  param_labels() %>% 
+  apply_indices(.omega=block(2)) 
+
+param_df <- mod1 %>% 
+  model_summary() %>% 
+  param_estimates()
+
+report_df <- inner_join(
+  label_df %>% select(-param_type),
+  param_df %>% select(parameter_names, estimate, stderr, fixed),
+  by = "parameter_names"
+)%>%
+  filter(fixed==FALSE) %>%
+  select(-fixed)
+
+report_df  %>% knitr::kable()
 
 cat("Model 2")
-mod2 %>% 
-  model_summary() %>%
-  param_estimates()%>% 
-  kableExtra::kable()
-```
 
-```{r}
 label_df <- mod2 %>% 
-  param_labels()
-label_df %>% 
-  kableExtra::kable()
+  param_labels() %>% 
+  apply_indices(.omega=block(2)) 
+
+param_df <- mod2 %>% 
+  model_summary() %>% 
+  param_estimates()
+
+report_df <- inner_join(
+  label_df %>% select(-param_type),
+  param_df %>% select(parameter_names, estimate, stderr, fixed),
+  by = "parameter_names"
+)%>%
+  filter(fixed==FALSE) %>%
+  select(-fixed)
+
+report_df  %>% knitr::kable()
 ```
 
 ```{r}
