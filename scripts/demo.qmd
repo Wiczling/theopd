@@ -12,7 +12,7 @@ format:
 
 # Introduction
 
-Simple demo demonstrating the use of NONMEM to fit theoph data using bbr package
+Simple demo demonstrating the use of NONMEM to fit theoph data using bbr package. It's based on [MetrumRG Ecosystem](https://merge.metrumrg.com/expo/expo1-nonmem-foce/).
 
 ```{r, message=FALSE}
 
@@ -96,8 +96,6 @@ figrawdata
 ```
 
 # Run NONMEM using bbi
-
-
 
 First model:
 
@@ -242,7 +240,7 @@ p4 <- npde_pred(join_df)
 (p1+p2)/(p3+p4)
 ```
 
-## Covariete relationships
+## Covariate relationships
 
 ```{r}
 ggplot(distinct(join_df,ID,.keep_all = TRUE),aes(x=WT,y=CL))+
@@ -491,11 +489,13 @@ param_estimates_compare(boot, mod2)%>%
 
 # AUC, Cmax, Cmin
 
+Simulated basic summaries of PK profile at steady-state conditions:
+
 ```{r}
 
 dose_rec <- filter(join_df, EVID==1) %>%
   distinct(ID,AMT,ETA1,ETA2,ETA3) %>% 
-  mutate(II = 24, SS = 1, TIME = 0, EVID = 1, CMT = 1)
+  mutate(II = 24, SS = 1, TIME = 0, EVID = 1, CMT = 2)
 
 simmod <- update(simmod, delta = 0.1, end = 24)
 
@@ -507,6 +507,7 @@ out <- mrgsim(
 maxmin <- 
   out %>% 
   group_by(ID) %>% 
+  filter(TIME>0) %>% 
   summarise(Cmax = max(IPRED), Cmin = min(IPRED), .groups = "drop")
 
 auc <- 
@@ -531,5 +532,3 @@ pmtab$data %>%
   kableExtra::kable()
 
 ```
-
-
