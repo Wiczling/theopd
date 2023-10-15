@@ -8,6 +8,8 @@ format:
   html:
     toc: true
     code-fold: true
+execute:
+  warning: false
 ---
 
 # Introduction
@@ -41,6 +43,9 @@ source("functions/resampling_functions.R") # from mrgmisc
 Some settings:
 
 ```{r}
+
+# user specific settings
+options(bbr.bbi_exe_path = "C:/Users/pawel/AppData/Roaming/bbi/bbi.exe")
 
 data_dir <- "../data/derived" 
 model_dir <- "../model/nonmem/basic"  
@@ -141,7 +146,7 @@ cat("Model 1")
 
 label_df <- mod1 %>% 
   param_labels() %>% 
-  apply_indices(.omega=block(2)) 
+  apply_indices() 
 
 param_df <- mod1 %>% 
   model_summary() %>% 
@@ -161,7 +166,7 @@ cat("Model 2")
 
 label_df <- mod2 %>% 
   param_labels() %>% 
-  apply_indices(.omega=block(2)) 
+  apply_indices() 
 
 param_df <- mod2 %>% 
   model_summary() %>% 
@@ -171,9 +176,9 @@ report_df <- inner_join(
   label_df %>% select(-param_type),
   param_df %>% select(parameter_names, estimate, stderr, fixed),
   by = "parameter_names"
-)%>%
-  filter(fixed==FALSE) %>%
-  select(-fixed)
+) %>%
+   filter(fixed==FALSE) %>%
+   select(-fixed)
 
 report_df  %>% knitr::kable()
 ```
@@ -255,7 +260,8 @@ ggplot(distinct(join_df,ID,.keep_all = TRUE),aes(x=WT,y=CL))+
 model_specification <- '
 $PROB 1-CMT Linear Model with 1st-Order Absorption
 
-$PKMODEL cmt = "GUT CENT", depot = TRUE
+$CMT GUT CENT
+$PKMODEL ncmt=1, depot=TRUE
 
 $NMEXT
 run = "2"
@@ -327,13 +333,12 @@ out <- mrgsim(
   etasrc    = "data.all", 
   obsonly   = TRUE,
   Req       = "MRG = IPRED", 
-  carry_out = "NM = IPRED, PRED, CONC") %>%
+  carry_out = "NM = IPRED,  CONC") %>%
   as.data.frame() %>%
   ggplot()+
   geom_point(aes(x=TIME,y=CONC))+
-  geom_line(aes(x=TIME,y=PRED), linetype=2)+
-  geom_line(aes(x=TIME,y=MRG))+
-  geom_line(aes(x=TIME,y=NM),color="blue")+
+  geom_line(aes(x=TIME,y=MRG),color="blue")+
+  geom_line(aes(x=TIME,y=NM), linetype=2)+
   labs( x="Time (h)", y="Theophylline Concentration (mg/L)")+
   facet_wrap(.~ID)
 
